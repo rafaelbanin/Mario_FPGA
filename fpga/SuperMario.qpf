@@ -1,0 +1,10 @@
+# -------------------------------------------------------------------------- #
+# Super Mario DE10 - Fase 1
+# -------------------------------------------------------------------------- #
+
+QUARTUS_VERSION = "23.1"
+DATE = "$(SHELL DATE)"
+
+PROJECT_REVISION = "SuperMario"
+PROJECT_OUTPUT_DIRECTORY = output_files
+MIN_QPF_VERSION_NUM = "34.0.0"

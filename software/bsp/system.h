@@ -1,0 +1,10 @@
+#ifndef BSP_SYSTEM_H
+#define BSP_SYSTEM_H
+
+#define LW_BRIDGE_BASE      0xFF200000u
+#define FRAMEBUFFER_BASE    0xFF200000u
+#define KEY_PIO_BASE        0xFF200010u
+#define HPS_OCRAM_BASE      0xFFFF0000u
+#define HPS_OCRAM_SIZE      0x00010000u
+
+#endif

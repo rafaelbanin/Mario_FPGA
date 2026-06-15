@@ -1,0 +1,2 @@
+# World 1-1 simplified (g=ground b=brick q=block P=pipe-top p=pipe-body c=cloud u=bush)
+# Edit this file and run: python3 tools/tilemap_to_c.py assets/level_1_1.csv -o software/level_data.h

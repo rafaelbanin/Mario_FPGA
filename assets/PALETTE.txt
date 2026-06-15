@@ -1,0 +1,19 @@
+# Super Mario DE10 - ASCII art color map for gfx_to_c.py
+# Char -> Index -> Meaning
+#
+# . or space = 0  transparent
+# 1 = black (outline)
+# 2 = sky blue
+# 3 = mario blue (overalls)
+# 4 = red (hat/shirt)
+# 5 = yellow (block/buttons)
+# 6 = green light (bush)
+# 7 = goomba tan
+# 8 = brown dark (feet/shadow)
+# 9 = ground orange
+# A = brick light
+# B = brick dark
+# C = white (cloud/eyes)
+# D = pipe green
+# E = skin (mario face)
+# F = reserved
