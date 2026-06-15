@@ -1,19 +1,19 @@
-# Super Mario DE10 - ASCII art color map for gfx_to_c.py
-# Char -> Index -> Meaning
+# Mario FPGA - ASCII art color map for gfx_to_c.py
+# Char -> Index -> Hex (RGB888) -> Meaning
 #
-# . or space = 0  transparent
-# 1 = black (outline)
-# 2 = sky blue
-# 3 = mario blue (overalls)
-# 4 = red (hat/shirt)
-# 5 = yellow (block/buttons)
-# 6 = green light (bush)
-# 7 = goomba tan
-# 8 = brown dark (feet/shadow)
-# 9 = ground orange
-# A = brick light
-# B = brick dark
-# C = white (cloud/eyes)
-# D = pipe green
-# E = skin (mario face)
-# F = reserved
+# . or space = 0  #000000  transparent
+# 1            = 1  #000000  black (outline)
+# 2            = 2  #5C94FC  sky blue
+# 3            = 3  #0000BC  mario blue (overalls)
+# 4            = 4  #FC0000  red (hat/shirt)
+# 5            = 5  #FCFC00  yellow (block/buttons)
+# 6            = 6  #00B800  green light (bush)
+# 7            = 7  #FCB800  goomba tan
+# 8            = 8  #B82800  brown dark (feet/shadow)
+# 9            = 9  #FC9838  ground orange
+# A            = A  #FCB800  brick light
+# B            = B  #B82800  brick dark
+# C            = C  #FCFCFC  white (cloud/eyes)
+# D            = D  #00A800  pipe green
+# E            = E  #FCBC98  skin (mario face)
+# F            = F  #00FCFC  reserved (cyan)

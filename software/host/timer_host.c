@@ -1,6 +1,5 @@
 #include "hw/timer.h"
-#include <unistd.h>
-#include <sys/time.h>
+#include <SDL.h>
 
 static uint32_t tick_ms;
 
@@ -17,7 +16,7 @@ uint32_t timer_millis(void)
 void timer_delay_ms(uint32_t ms)
 {
     tick_ms += ms;
-    usleep((useconds_t)ms * 1000u);
+    SDL_Delay(ms);
 }
 
 void timer_tick_isr(void)

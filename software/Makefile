@@ -3,6 +3,7 @@ CROSS ?= arm-none-eabi-
 CC = $(CROSS)gcc
 AS = $(CROSS)as
 OBJCOPY = $(CROSS)objcopy
+RM ?= rm -f
 
 CFLAGS = -mcpu=cortex-a9 -mfpu=neon -mfloat-abi=hard -O2 -Wall -Wextra \
          -ffreestanding -nostdlib -nostartfiles -I. -Ihw
@@ -18,22 +19,36 @@ TARGET = supermario
 ELF = $(TARGET).elf
 BIN = $(TARGET).bin
 
-# Host simulator (PC) - requires libsdl2-dev
+# Host simulator (PC) - Linux and Windows (MSYS2/MinGW)
 HOST_CC ?= gcc
 HOST_CFLAGS = -O2 -Wall -Wextra -I. -Ihost
-HOST_LIBS = $(shell pkg-config --libs sdl2 2>/dev/null)
-HOST_CFLAGS += $(shell pkg-config --cflags sdl2 2>/dev/null)
-
 GAME_SRCS = game.c physics.c collision.c camera.c input.c render.c tiles.c \
             tile_gfx_table.c sprites.c gfx.c world.c enemy.c
 HOST_SRCS = host/main_host.c host/framebuffer_host.c host/keys_host.c host/timer_host.c
-HOST_TARGET = supermario_host
 
-.PHONY: all host clean host-check
+ifeq ($(OS),Windows_NT)
+HOST_TARGET = supermario_host.exe
+HOST_LIBS ?= -lSDL2
+else
+HOST_TARGET = supermario_host
+HOST_LIBS = $(shell pkg-config --libs sdl2 2>/dev/null)
+HOST_CFLAGS += $(shell pkg-config --cflags sdl2 2>/dev/null)
+endif
+
+# Fallback when pkg-config is unavailable (e.g. manual SDL2 install)
+ifeq ($(strip $(HOST_LIBS)),)
+HOST_LIBS = -lSDL2
+endif
+
+.PHONY: all host host-cmake clean host-check
 
 all: $(BIN)
 
 host: $(HOST_TARGET)
+
+host-cmake:
+	cmake -B build -DCMAKE_BUILD_TYPE=Release
+	cmake --build build
 
 $(HOST_TARGET): $(GAME_SRCS) $(HOST_SRCS)
 	$(HOST_CC) $(HOST_CFLAGS) -o $@ $(GAME_SRCS) $(HOST_SRCS) $(HOST_LIBS)
@@ -51,7 +66,8 @@ $(BIN): $(ELF)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
-	rm -f $(OBJS) $(ELF) $(BIN) $(HOST_TARGET)
+	$(RM) $(OBJS) $(ELF) $(BIN) $(HOST_TARGET) supermario_host.exe
+	$(RM) -r build 2>/dev/null || true
 
 host-check:
 	@echo "Syntax check only - requires $(CROSS)gcc"

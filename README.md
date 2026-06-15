@@ -30,13 +30,43 @@ Projeto SoC para **Terasic DE10-Standard** (Cyclone V `5CSXFC6D6F31C6`) com:
 
 ## Testar no PC antes da placa (simulador)
 
-O mesmo código do jogo pode rodar na sua máquina com SDL2:
+O mesmo código do jogo pode rodar na sua máquina com SDL2 (Linux ou Windows).
+
+### Linux
 
 ```bash
-sudo apt install libsdl2-dev    # Ubuntu/Debian
+sudo apt install libsdl2-dev build-essential cmake pkg-config   # Ubuntu/Debian
 cd software
-make host
+make host                    # ou: ./build_host.sh
 ./supermario_host
+```
+
+Com CMake:
+
+```bash
+cd software
+cmake -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build
+./build/supermario_host
+```
+
+### Windows (MSYS2)
+
+1. Instale [MSYS2](https://www.msys2.org/)
+2. No terminal **UCRT64**:
+
+```bash
+pacman -S mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-make mingw-w64-ucrt-x86_64-SDL2
+cd /c/caminho/para/Mario_FPGA/software
+./build_host.bat
+./build/supermario_host.exe
+```
+
+Alternativa com Make (MSYS2):
+
+```bash
+make host
+./supermario_host.exe
 ```
 
 | Tecla PC | Ação |
