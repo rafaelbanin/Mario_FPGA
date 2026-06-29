@@ -23,8 +23,8 @@ add_fileset QUARTUS_SYNTH QUARTUS_SYNTH "" ""
 set_fileset_property QUARTUS_SYNTH TOP_LEVEL framebuffer_bridge
 set_fileset_property QUARTUS_SYNTH ENABLE_RELATIVE_INCLUDE_PATHS false
 set_fileset_property QUARTUS_SYNTH ENABLE_FILE_OVERWRITE_MODE false
-# Paths are relative to soc_system.qsys (fpga/), not to this .tcl file.
-add_fileset_file framebuffer_bridge.v VERILOG PATH hdl/framebuffer_bridge.v
+source [file join [file dirname [file normalize [info script]]] _hdl_paths.tcl]
+add_fileset_file framebuffer_bridge.v VERILOG PATH [mario_resolve_hdl framebuffer_bridge.v]
 
 add_interface avalon_slave avalon end
 set_interface_property avalon_slave ADDRESS_UNITS WORDS
