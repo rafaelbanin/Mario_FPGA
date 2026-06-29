@@ -1,4 +1,9 @@
-package require -exact qsys 18.1
+# Quartus 23.1 uses qsys 23.1; older releases used 18.1
+if {[catch { package require -exact qsys 23.1 }]} {
+    if {[catch { package require -exact qsys 18.1 }]} {
+        package require qsys
+    }
+}
 
 set_module_property NAME framebuffer_bridge
 set_module_property DISPLAY_NAME "Framebuffer Bridge"
@@ -18,7 +23,8 @@ add_fileset QUARTUS_SYNTH QUARTUS_SYNTH "" ""
 set_fileset_property QUARTUS_SYNTH TOP_LEVEL framebuffer_bridge
 set_fileset_property QUARTUS_SYNTH ENABLE_RELATIVE_INCLUDE_PATHS false
 set_fileset_property QUARTUS_SYNTH ENABLE_FILE_OVERWRITE_MODE false
-add_fileset_file framebuffer_bridge.v VERILOG PATH ../hdl/framebuffer_bridge.v
+set hdl_dir [file normalize [file join [file dirname [info script]] ../hdl]]
+add_fileset_file framebuffer_bridge.v VERILOG PATH [file join $hdl_dir framebuffer_bridge.v]
 
 add_interface avalon_slave avalon end
 set_interface_property avalon_slave ADDRESS_UNITS WORDS

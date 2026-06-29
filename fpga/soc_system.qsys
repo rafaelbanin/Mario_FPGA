@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <system name="soc_system">
- <component name="soc_system" displayName="soc_system" version="1.0" description="Super Mario DE10 SoC with HPS, framebuffer and key PIO">
-  <parameter name="bonusData"><![CDATA[bonusData]]></parameter>
-  <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
-  <parameter name="device" value="5CSXFC6D6F31C6" />
-  <parameter name="deviceFamily" value="Cyclone V" />
-  <parameter name="deviceSpeedGrade" value="6" />
-  <parameter name="fabricMode" value="QSYS" />
-  <parameter name="generationId" value="supermario-de10-fase1" />
-  <parameter name="globalResetBus" value="false" />
-  <parameter name="maxAdditionalLatency" value="0" />
-  <parameter name="projectName" value="SuperMario" />
-  <parameter name="sopcBorderPoints" value="false" />
-  <parameter name="systemHash" value="supermario-de10-fase1" />
-  <parameter name="timeStamp" value="1749388800" />
-  <parameter name="useTestBenchNamingPattern" value="false" />
- </component>
+ <component
+   name="soc_system"
+   displayName="soc_system"
+   version="1.0"
+   description="Super Mario DE10 SoC with HPS, framebuffer and key PIO"
+   tags=""
+   categories="System" />
+ <parameter name="bonusData"><![CDATA[bonusData]]></parameter>
+ <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
+ <parameter name="device" value="5CSXFC6D6F31C6" />
+ <parameter name="deviceFamily" value="Cyclone V" />
+ <parameter name="deviceSpeedGrade" value="6" />
+ <parameter name="fabricMode" value="QSYS" />
+ <parameter name="generationId" value="0" />
+ <parameter name="globalResetBus" value="false" />
+ <parameter name="maxAdditionalLatency" value="0" />
+ <parameter name="projectName" value="SuperMario" />
+ <parameter name="sopcBorderPoints" value="false" />
+ <parameter name="systemHash" value="0" />
+ <parameter name="timeStamp" value="0" />
+ <parameter name="useTestBenchNamingPattern" value="false" />
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
- <interface name="reset" internal="reset_0.reset" type="reset" dir="end" />
+ <interface name="reset" internal="clk_0.clk_in_reset" type="reset" dir="end" />
  <interface name="memory" internal="hps_0.memory" type="conduit" dir="end" />
  <interface name="emac" internal="hps_0.emac" type="conduit" dir="end" />
  <interface name="qspi" internal="hps_0.qspi" type="conduit" dir="end" />
@@ -30,17 +35,13 @@
  <interface name="key_pio_0" internal="key_pio_0.avalon_slave" type="avalon" dir="end" />
  <interface name="key_pio_0_clk" internal="key_pio_0.clock" type="clock" dir="end" />
  <interface name="key_pio_0_reset" internal="key_pio_0.reset" type="reset" dir="end" />
- <module name="clk_0" kind="clock_source" version="18.1" enabled="1">
+ <module name="clk_0" kind="clock_source" version="23.1" enabled="1">
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="clockFrequencyKnown" value="true" />
   <parameter name="inputClockFrequency" value="0" />
-  <parameter name="resetSynchronousEdges" value="NONE" />
+  <parameter name="resetSynchronousEdges" value="DEASSERT" />
  </module>
- <module name="reset_0" kind="reset_source" version="18.1" enabled="1">
-  <parameter name="activeResetLevel" value="0" />
-  <parameter name="synchronousEdges" value="deassert" />
- </module>
- <module name="hps_0" kind="altera_hps" version="18.1" enabled="1">
+ <module name="hps_0" kind="altera_hps" version="23.1" enabled="1">
   <parameter name="MEM_VENDOR" value="MICRON" />
   <parameter name="MEM_FORM_FACTOR" value="Discrete" />
   <parameter name="MEM_DEVICE" value="MT41K256M16HA-125" />
@@ -49,22 +50,20 @@
  </module>
  <module name="framebuffer_bridge_0" kind="framebuffer_bridge" version="1.0" enabled="1" />
  <module name="key_pio_0" kind="key_pio" version="1.0" enabled="1" />
- <connection kind="clock" version="18.1" start="clk_0.clk" end="hps_0.h2f_lw_axi_clk" />
- <connection kind="clock" version="18.1" start="clk_0.clk" end="framebuffer_bridge_0.clock" />
- <connection kind="clock" version="18.1" start="clk_0.clk" end="key_pio_0.clock" />
- <connection kind="reset" version="18.1" start="reset_0.reset" end="hps_0.h2f_reset" />
- <connection kind="reset" version="18.1" start="reset_0.reset" end="framebuffer_bridge_0.reset" />
- <connection kind="reset" version="18.1" start="reset_0.reset" end="key_pio_0.reset" />
- <connection kind="avalon" version="18.1" start="hps_0.h2f_lw_axi_master" end="framebuffer_bridge_0.avalon_slave">
+ <connection kind="clock" version="23.1" start="clk_0.clk" end="hps_0.h2f_lw_axi_clk" />
+ <connection kind="clock" version="23.1" start="clk_0.clk" end="framebuffer_bridge_0.clock" />
+ <connection kind="clock" version="23.1" start="clk_0.clk" end="key_pio_0.clock" />
+ <connection kind="reset" version="23.1" start="clk_0.clk_reset" end="hps_0.h2f_reset" />
+ <connection kind="reset" version="23.1" start="clk_0.clk_reset" end="framebuffer_bridge_0.reset" />
+ <connection kind="reset" version="23.1" start="clk_0.clk_reset" end="key_pio_0.reset" />
+ <connection kind="avalon" version="23.1" start="hps_0.h2f_lw_axi_master" end="framebuffer_bridge_0.avalon_slave">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x00000000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
- <connection kind="avalon" version="18.1" start="hps_0.h2f_lw_axi_master" end="key_pio_0.avalon_slave">
+ <connection kind="avalon" version="23.1" start="hps_0.h2f_lw_axi_master" end="key_pio_0.avalon_slave">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x00000010" />
   <parameter name="defaultConnection" value="false" />
  </connection>
- <connection kind="clock" version="18.1" start="clk_0.clk_in" end="clk_0.clk" />
- <connection kind="reset" version="18.1" start="reset_0.reset" end="reset_0.reset" />
 </system>

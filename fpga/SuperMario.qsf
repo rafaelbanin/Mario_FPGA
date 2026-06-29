@@ -27,6 +27,7 @@ set_global_assignment -name VERILOG_FILE hdl/key_pio.v
 set_global_assignment -name VHDL_FILE hdl/VGA_Sync.vhd
 set_global_assignment -name VHDL_FILE hdl/Video_PLL.vhd
 set_global_assignment -name QSYS_FILE soc_system.qsys
+set_global_assignment -name IP_SEARCH_PATH ip
 
 # Clock
 set_location_assignment PIN_AF14 -to CLOCK_50

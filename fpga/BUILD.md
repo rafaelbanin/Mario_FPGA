@@ -7,10 +7,18 @@
 
 ## Passo 1 — Registrar IPs custom
 
-No Platform Designer, adicione os componentes em `fpga/ip/`:
+1. No **Quartus**: **Assignments → Settings → IP → IP Catalog Search Path** → adicione `fpga/ip/` (ou copie `fpga/ip/mario_ip.ipx` para a raiz do projeto).
+2. No **Platform Designer**: **Tools → Options → IP Search Path** → adicione a mesma pasta `fpga/ip/`.
+3. Pressione **F5** (Refresh System) após adicionar o caminho.
+
+IPs custom:
 
 - `framebuffer_bridge_hw.tcl`
 - `key_pio_hw.tcl`
+
+Se aparecer `framebuffer_bridge is not in the library`, o caminho acima não está configurado ou os `.tcl` não foram atualizados.
+
+**Quartus 23.1:** o `soc_system.qsys` não usa mais o IP `reset_source` (removido). O reset vem do `clock_source` (`clk_0.clk_reset`), padrão dos projetos DE10 recentes.
 
 ## Passo 2 — Gerar soc_system
 
