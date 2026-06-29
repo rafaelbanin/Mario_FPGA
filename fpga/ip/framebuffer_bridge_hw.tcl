@@ -37,17 +37,12 @@ if {$_hdl_path eq ""} {
 add_fileset_file framebuffer_bridge.v VERILOG PATH $_hdl_path
 
 add_interface avalon_slave avalon end
-set_interface_property avalon_slave ADDRESS_UNITS WORDS
-set_interface_property avalon_slave ASSOCIATED_CLOCK clock
-set_interface_property avalon_slave ASSOCIATED_RESET reset
-set_interface_property avalon_slave BITS_PER_SYMBOL 8
-set_interface_property avalon_slave BURSTCOUNT_UNITS WORDS
-set_interface_property avalon_slave BYTE_ENABLE 1
-set_interface_property avalon_slave BYTE_SIZE 8
-set_interface_property avalon_slave MAX_BURST_COUNT 1
-set_interface_property avalon_slave READ_WAIT_TIME 1
-set_interface_property avalon_slave WRITE_WAIT_TIME 0
-set_interface_property avalon_slave TIMING_UNITS Cycles
+set_interface_property avalon_slave addressUnits WORDS
+set_interface_property avalon_slave associatedClock clock
+set_interface_property avalon_slave associatedReset reset
+set_interface_property avalon_slave readWaitTime 1
+set_interface_property avalon_slave writeWaitTime 0
+set_interface_property avalon_slave timingUnits Cycles
 
 add_interface_port avalon_slave avs_address address Input 2
 add_interface_port avalon_slave avs_read read Input 1
@@ -57,11 +52,11 @@ add_interface_port avalon_slave avs_readdata readdata Output 32
 add_interface_port avalon_slave avs_byteenable byteenable Input 4
 
 add_interface clock clock end
-set_interface_property clock ASSOCIATED_RESET reset
-set_interface_property clock CLOCK_RATE 50000000
+set_interface_property clock associatedReset reset
+set_interface_property clock clockRate 50000000
 add_interface_port clock clk clk Input 1
 
 add_interface reset reset end
-set_interface_property reset ASSOCIATED_CLOCK clock
-set_interface_property reset SYNCHRONOUS_EDGES deassert
+set_interface_property reset associatedClock clock
+set_interface_property reset synchronousEdges DEASSERT
 add_interface_port reset reset reset Input 1
