@@ -25,6 +25,7 @@ HOST_CFLAGS = -O2 -Wall -Wextra -I. -Ihost
 GAME_SRCS = game.c physics.c collision.c camera.c input.c render.c tiles.c \
             tile_gfx_table.c sprites.c gfx.c world.c enemy.c
 HOST_SRCS = host/main_host.c host/framebuffer_host.c host/keys_host.c host/timer_host.c
+GFX_HEADERS = $(wildcard *_gfx.h)
 
 ifeq ($(OS),Windows_NT)
 HOST_TARGET = supermario_host.exe
@@ -40,17 +41,24 @@ ifeq ($(strip $(HOST_LIBS)),)
 HOST_LIBS = -lSDL2
 endif
 
-.PHONY: all host host-cmake clean host-check
+.PHONY: all host host-cmake clean host-check regen-goomba
 
 all: $(BIN)
 
 host: $(HOST_TARGET)
 
+# Regenera headers do Goomba a partir dos .txt e recompila o simulador
+regen-goomba:
+	python3 ../tools/gfx_to_c.py ../assets/gfx/goomba_walk1.txt goomba_walk1 -o goomba_walk1_gfx.h
+	python3 ../tools/gfx_to_c.py ../assets/gfx/goomba_walk2.txt goomba_walk2 -o goomba_walk2_gfx.h
+	python3 ../tools/gfx_to_c.py ../assets/gfx/goomba_squished.txt goomba_squished -o goomba_squished_gfx.h
+	$(MAKE) host
+
 host-cmake:
 	cmake -B build -DCMAKE_BUILD_TYPE=Release
 	cmake --build build
 
-$(HOST_TARGET): $(GAME_SRCS) $(HOST_SRCS)
+$(HOST_TARGET): $(GAME_SRCS) $(HOST_SRCS) $(GFX_HEADERS)
 	$(HOST_CC) $(HOST_CFLAGS) -o $@ $(GAME_SRCS) $(HOST_SRCS) $(HOST_LIBS)
 
 $(ELF): $(OBJS) linker.ld

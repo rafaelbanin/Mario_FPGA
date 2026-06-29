@@ -28,7 +28,9 @@ set(HOST_SRCS
     host/timer_host.c
 )
 
-add_executable(supermario_host ${GAME_SRCS} ${HOST_SRCS})
+file(GLOB GFX_HEADERS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/*_gfx.h")
+
+add_executable(supermario_host ${GAME_SRCS} ${HOST_SRCS} ${GFX_HEADERS})
 
 target_include_directories(supermario_host PRIVATE . host)
 
