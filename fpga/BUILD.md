@@ -24,11 +24,11 @@ Se aparecer `framebuffer_bridge is not in the library`, o caminho acima não est
 
 1. Abrir **Tools → Platform Designer**
 2. Abrir `soc_system.qsys`
-3. Confirmar instâncias: `hps_0`, `clk_0`, `reset_0`, `framebuffer_bridge_0`, `key_pio_0`
+3. Confirmar instâncias: `hps_0`, `clk_0`, `framebuffer_bridge_0`, `key_pio_0`
 4. Mapear endereços no LW bridge:
    - `framebuffer_bridge_0` → `0x00000000`
    - `key_pio_0` → `0x00000010`
-5. Exportar conduit `key_pio_0.key_input` para o top
+5. Exportar conduits: `key_pio_0.key_input` (KEY) e `framebuffer_bridge_0.vga` (VGA)
 6. **Generate HDL** → cria `soc_system/synthesis/soc_system.v`
 
 ## Passo 3 — Compilar

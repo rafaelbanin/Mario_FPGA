@@ -51,7 +51,6 @@ module SuperMario_top (
 );
 
     wire        reset;
-    wire        pixel_clk;
     wire        video_on;
     wire [9:0]  pixel_row;
     wire [9:0]  pixel_column;
@@ -59,20 +58,6 @@ module SuperMario_top (
 
     wire [15:0] fb_addr;
     wire [3:0]  fb_color;
-
-    wire        fb_clk;
-    wire        fb_reset;
-    wire [1:0]  fb_avs_address;
-    wire        fb_avs_read;
-    wire        fb_avs_write;
-    wire [31:0] fb_avs_writedata;
-    wire [31:0] fb_avs_readdata;
-    wire [3:0]  fb_avs_byteenable;
-
-    wire        key_clk;
-    wire        key_reset;
-    wire        key_avs_read;
-    wire [31:0] key_avs_readdata;
 
     assign reset = 1'b0;
 
@@ -107,78 +92,48 @@ module SuperMario_top (
         .fb_read_en   ()
     );
 
-    framebuffer_bridge fb_inst (
-        .clk            (fb_clk),
-        .reset          (fb_reset),
-        .avs_address    (fb_avs_address),
-        .avs_read       (fb_avs_read),
-        .avs_write      (fb_avs_write),
-        .avs_writedata  (fb_avs_writedata),
-        .avs_readdata   (fb_avs_readdata),
-        .avs_byteenable (fb_avs_byteenable),
-        .vga_clk        (VGA_CLK),
-        .vga_addr       (fb_addr),
-        .vga_color      (fb_color)
-    );
-
-    key_pio key_inst (
-        .clk         (key_clk),
-        .reset       (key_reset),
-        .key_n       (KEY),
-        .avs_read    (key_avs_read),
-        .avs_readdata(key_avs_readdata)
-    );
-
     soc_system u0 (
-        .clk_clk                         (CLOCK_50),
-        .reset_reset_n                   (~reset),
-        .memory_mem_a                    (hps_memory_mem_a),
-        .memory_mem_ba                   (hps_memory_mem_ba),
-        .memory_mem_ck                   (hps_memory_mem_ck),
-        .memory_mem_ck_n                 (hps_memory_mem_ck_n),
-        .memory_mem_cke                  (hps_memory_mem_cke),
-        .memory_mem_cs_n                 (hps_memory_mem_cs_n),
-        .memory_mem_dm                   (hps_memory_mem_dm),
-        .memory_mem_dq                   (hps_memory_mem_dq),
-        .memory_mem_dqs                  (hps_memory_mem_dqs),
-        .memory_mem_dqs_n                (hps_memory_mem_dqs_n),
-        .memory_mem_odt                  (hps_memory_mem_odt),
-        .memory_mem_ras_n                (hps_memory_mem_ras_n),
-        .memory_mem_reset_n              (hps_memory_mem_reset_n),
-        .memory_mem_we_n                 (hps_memory_mem_we_n),
-        .hps_0_hps_io_hps_io_gpio_inst   (),
-        .emac_md_clk                     (hps_emac_md_clk),
-        .emac_md_io                      (hps_emac_md_io),
-        .emac_rx_clk                     (hps_emac_rx_clk),
-        .emac_rx_dv                      (hps_emac_rx_dv),
-        .emac_rx_d                       (hps_emac_rx_d),
-        .emac_tx_clk                     (hps_emac_tx_clk),
-        .emac_tx_en                      (hps_emac_tx_en),
-        .emac_tx_d                       (hps_emac_tx_d),
-        .qspi_io                         (hps_qspi_io),
-        .qspi_ss_n                       (hps_qspi_ss_n),
-        .sd_cmd                          (hps_sd_cmd),
-        .sd_data                         (hps_sd_data),
-        .sd_wp_n                         (hps_sd_wp_n),
-        .uart_rx                         (hps_uart_rx),
-        .uart_tx                         (hps_uart_tx),
-        .usb_clk                         (hps_usb_clk),
-        .usb_data                        (hps_usb_data),
-        .usb_addr                        (hps_usb_addr),
-        .usb_nxt                         (hps_usb_nxt),
-        .usb_stp                         (hps_usb_stp),
-        .framebuffer_bridge_0_avs_address    (fb_avs_address),
-        .framebuffer_bridge_0_avs_read       (fb_avs_read),
-        .framebuffer_bridge_0_avs_write      (fb_avs_write),
-        .framebuffer_bridge_0_avs_writedata  (fb_avs_writedata),
-        .framebuffer_bridge_0_avs_readdata   (fb_avs_readdata),
-        .framebuffer_bridge_0_avs_byteenable (fb_avs_byteenable),
-        .framebuffer_bridge_0_clk_clk        (fb_clk),
-        .framebuffer_bridge_0_reset_reset_n  (~fb_reset),
-        .key_pio_0_avs_read                  (key_avs_read),
-        .key_pio_0_avs_readdata              (key_avs_readdata),
-        .key_pio_0_clk_clk                   (key_clk),
-        .key_pio_0_reset_reset_n             (~key_reset)
+        .clk_clk                              (CLOCK_50),
+        .reset_reset_n                        (~reset),
+        .memory_mem_a                         (hps_memory_mem_a),
+        .memory_mem_ba                        (hps_memory_mem_ba),
+        .memory_mem_ck                        (hps_memory_mem_ck),
+        .memory_mem_ck_n                      (hps_memory_mem_ck_n),
+        .memory_mem_cke                       (hps_memory_mem_cke),
+        .memory_mem_cs_n                      (hps_memory_mem_cs_n),
+        .memory_mem_dm                        (hps_memory_mem_dm),
+        .memory_mem_dq                        (hps_memory_mem_dq),
+        .memory_mem_dqs                       (hps_memory_mem_dqs),
+        .memory_mem_dqs_n                     (hps_memory_mem_dqs_n),
+        .memory_mem_odt                       (hps_memory_mem_odt),
+        .memory_mem_ras_n                     (hps_memory_mem_ras_n),
+        .memory_mem_reset_n                   (hps_memory_mem_reset_n),
+        .memory_mem_we_n                      (hps_memory_mem_we_n),
+        .hps_0_hps_io_hps_io_gpio_inst        (),
+        .emac_md_clk                          (hps_emac_md_clk),
+        .emac_md_io                           (hps_emac_md_io),
+        .emac_rx_clk                          (hps_emac_rx_clk),
+        .emac_rx_dv                           (hps_emac_rx_dv),
+        .emac_rx_d                            (hps_emac_rx_d),
+        .emac_tx_clk                          (hps_emac_tx_clk),
+        .emac_tx_en                           (hps_emac_tx_en),
+        .emac_tx_d                            (hps_emac_tx_d),
+        .qspi_io                              (hps_qspi_io),
+        .qspi_ss_n                            (hps_qspi_ss_n),
+        .sd_cmd                               (hps_sd_cmd),
+        .sd_data                              (hps_sd_data),
+        .sd_wp_n                              (hps_sd_wp_n),
+        .uart_rx                              (hps_uart_rx),
+        .uart_tx                              (hps_uart_tx),
+        .usb_clk                              (hps_usb_clk),
+        .usb_data                             (hps_usb_data),
+        .usb_addr                             (hps_usb_addr),
+        .usb_nxt                              (hps_usb_nxt),
+        .usb_stp                              (hps_usb_stp),
+        .key_pio_0_key_input_key_n            (KEY),
+        .framebuffer_bridge_0_vga_vga_clk     (VGA_CLK),
+        .framebuffer_bridge_0_vga_vga_addr    (fb_addr),
+        .framebuffer_bridge_0_vga_vga_color   (fb_color)
     );
 
 endmodule

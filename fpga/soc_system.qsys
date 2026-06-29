@@ -29,12 +29,8 @@
  <interface name="sd" internal="hps_0.sd" type="conduit" dir="end" />
  <interface name="uart" internal="hps_0.uart" type="conduit" dir="end" />
  <interface name="usb" internal="hps_0.usb" type="conduit" dir="end" />
- <interface name="framebuffer_bridge_0" internal="framebuffer_bridge_0.avalon_slave" type="avalon" dir="end" />
- <interface name="framebuffer_bridge_0_clk" internal="framebuffer_bridge_0.clock" type="clock" dir="end" />
- <interface name="framebuffer_bridge_0_reset" internal="framebuffer_bridge_0.reset" type="reset" dir="end" />
- <interface name="key_pio_0" internal="key_pio_0.avalon_slave" type="avalon" dir="end" />
- <interface name="key_pio_0_clk" internal="key_pio_0.clock" type="clock" dir="end" />
- <interface name="key_pio_0_reset" internal="key_pio_0.reset" type="reset" dir="end" />
+ <interface name="key_pio_0_key_input" internal="key_pio_0.key_input" type="conduit" dir="end" />
+ <interface name="framebuffer_bridge_0_vga" internal="framebuffer_bridge_0.vga" type="conduit" dir="end" />
  <module name="clk_0" kind="clock_source" version="23.1" enabled="1">
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="clockFrequencyKnown" value="true" />
@@ -42,7 +38,7 @@
   <parameter name="resetSynchronousEdges" value="DEASSERT" />
  </module>
  <module name="hps_0" kind="altera_hps" version="23.1" enabled="1">
-  <parameter name="MEM_VENDOR" value="MICRON" />
+  <parameter name="MEM_VENDOR" value="Micron" />
   <parameter name="MEM_FORM_FACTOR" value="Discrete" />
   <parameter name="MEM_DEVICE" value="MT41K256M16HA-125" />
   <parameter name="HPS_MAIN_CLOCK" value="800.0" />
@@ -50,10 +46,12 @@
  </module>
  <module name="framebuffer_bridge_0" kind="framebuffer_bridge" version="1.0" enabled="1" />
  <module name="key_pio_0" kind="key_pio" version="1.0" enabled="1" />
- <connection kind="clock" version="23.1" start="clk_0.clk" end="hps_0.h2f_lw_axi_clk" />
+ <connection kind="clock" version="23.1" start="clk_0.clk" end="hps_0.h2f_lw_axi_clock" />
+ <connection kind="clock" version="23.1" start="clk_0.clk" end="hps_0.h2f_axi_clock" />
+ <connection kind="clock" version="23.1" start="clk_0.clk" end="hps_0.f2h_axi_clock" />
+ <connection kind="clock" version="23.1" start="clk_0.clk" end="hps_0.f2h_sdram0_clock" />
  <connection kind="clock" version="23.1" start="clk_0.clk" end="framebuffer_bridge_0.clock" />
  <connection kind="clock" version="23.1" start="clk_0.clk" end="key_pio_0.clock" />
- <connection kind="reset" version="23.1" start="clk_0.clk_reset" end="hps_0.h2f_reset" />
  <connection kind="reset" version="23.1" start="clk_0.clk_reset" end="framebuffer_bridge_0.reset" />
  <connection kind="reset" version="23.1" start="clk_0.clk_reset" end="key_pio_0.reset" />
  <connection kind="avalon" version="23.1" start="hps_0.h2f_lw_axi_master" end="framebuffer_bridge_0.avalon_slave">

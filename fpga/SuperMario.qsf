@@ -21,9 +21,7 @@ set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
 # Source files
 set_global_assignment -name SYSTEM_VERILOG_FILE soc_system/synthesis/soc_system.v
 set_global_assignment -name VERILOG_FILE hdl/SuperMario_top.v
-set_global_assignment -name VERILOG_FILE hdl/framebuffer_bridge.v
 set_global_assignment -name VERILOG_FILE hdl/vga_scanout.v
-set_global_assignment -name VERILOG_FILE hdl/key_pio.v
 set_global_assignment -name VHDL_FILE hdl/VGA_Sync.vhd
 set_global_assignment -name VHDL_FILE hdl/Video_PLL.vhd
 set_global_assignment -name QSYS_FILE soc_system.qsys

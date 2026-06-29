@@ -60,3 +60,8 @@ add_interface reset reset end
 set_interface_property reset associatedClock clock
 set_interface_property reset synchronousEdges DEASSERT
 add_interface_port reset reset reset Input 1
+
+add_interface vga conduit end
+add_interface_port vga vga_clk vga_clk Input 1
+add_interface_port vga vga_addr vga_addr Input 16
+add_interface_port vga vga_color vga_color Output 4
