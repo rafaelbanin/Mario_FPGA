@@ -23,8 +23,18 @@ add_fileset QUARTUS_SYNTH QUARTUS_SYNTH "" ""
 set_fileset_property QUARTUS_SYNTH TOP_LEVEL framebuffer_bridge
 set_fileset_property QUARTUS_SYNTH ENABLE_RELATIVE_INCLUDE_PATHS false
 set_fileset_property QUARTUS_SYNTH ENABLE_FILE_OVERWRITE_MODE false
-source [file join [file dirname [file normalize [info script]]] _hdl_paths.tcl]
-add_fileset_file framebuffer_bridge.v VERILOG PATH [mario_resolve_hdl framebuffer_bridge.v]
+set _hdl_path ""
+foreach _candidate {../hdl/framebuffer_bridge.v hdl/framebuffer_bridge.v} {
+    set _norm [file normalize $_candidate]
+    if {[file exists $_norm]} {
+        set _hdl_path $_norm
+        break
+    }
+}
+if {$_hdl_path eq ""} {
+    error "Cannot find fpga/hdl/framebuffer_bridge.v (cwd=[pwd])"
+}
+add_fileset_file framebuffer_bridge.v VERILOG PATH $_hdl_path
 
 add_interface avalon_slave avalon end
 set_interface_property avalon_slave ADDRESS_UNITS WORDS

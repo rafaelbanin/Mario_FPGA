@@ -15,7 +15,6 @@ IPs custom (pasta `fpga/ip/`):
 
 - `framebuffer_bridge_hw.tcl`
 - `key_pio_hw.tcl`
-- `_hdl_paths.tcl` (localiza `fpga/hdl/*.v` — necessário no Windows)
 
 Se aparecer `framebuffer_bridge is not in the library`, o caminho acima não está configurado ou os `.tcl` não foram atualizados.
 
